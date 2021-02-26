@@ -7,15 +7,14 @@ import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
-  useEffect(() => {
-    console.log(axiosWithAuth);
-    axiosWithAuth()
-      .get("/api/colors")
-      .then((res) => {
-        setColorList(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axiosWithAuth()
+  //     .get("/api/colors")
+  //     .then((res) => {
+  //       setColorList(res.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <>
@@ -27,6 +26,3 @@ const BubblePage = () => {
 };
 
 export default BubblePage;
-
-//Task List:
-//1. Make an axios call to retrieve all color data and push to state on mounting.

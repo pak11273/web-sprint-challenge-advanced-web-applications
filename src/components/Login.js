@@ -21,29 +21,6 @@ const Login = (props) => {
     // when you have handled the token, navigate to the BubblePage route
   });
 
-  // IGNORE THE USEEFFECT BELOW!!!
-  // useEffect(() => {
-  //   axios
-  //     .delete(`http://localhost:5000/api/colors/1`, {
-  //       headers: {
-  //         authorization:
-  //           "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       axios
-  //         .get(`http://localhost:5000/api/colors`, {
-  //           headers: {
-  //             authorization: "",
-  //           },
-  //         })
-  //         .then((res) => {
-  //           console.log(res);
-  //         });
-  //       console.log(res);
-  //     });
-  // });
-
   const onSubmit = (e) => {
     //   username: 'Lambda School', password: 'i<3Lambd4'
     e.preventDefault();

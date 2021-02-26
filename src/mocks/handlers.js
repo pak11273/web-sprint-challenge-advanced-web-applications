@@ -142,7 +142,6 @@ export const handlers = [
   rest.put(`${urlBase}/colors/:id`, (req, res, ctx) => {
     if (authenticator(req)) {
       if (!req.params.id) {
-        console.log("1");
         return res(
           ctx.status(400),
           ctx.send("Your request is missing the color id")
@@ -150,7 +149,6 @@ export const handlers = [
       }
 
       if (req.body.id === undefined || !req.body.color || !req.body.code) {
-        console.log("2", req);
         return res(
           ctx.status(422),
           ctx.send("Make sure your request body has all the fields it needs")
@@ -158,17 +156,14 @@ export const handlers = [
       }
 
       colors = colors.map((color) => {
-        console.log("3");
         if (`${color.id}` === req.params.id) {
           return req.body;
         }
         return color;
       });
-      console.log("4");
 
       return res(ctx.status(200), ctx.json(req.body));
     } else {
-      console.log("5");
       return res(
         ctx.status(403),
         ctx.json({ error: "User must be logged in to do that." })
