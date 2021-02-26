@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
+import axios from "axios";
 
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
 
   return (
     <>
+      <h1>Bubble Page</h1>
       <ColorList colors={colorList} updateColors={setColorList} />
       <Bubbles colors={colorList} />
     </>

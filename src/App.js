@@ -1,15 +1,26 @@
 import "./styles.scss";
 
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
+import BubblePage from "./components/BubblePage";
 import Login from "./components/Login";
+import { PrivateRoute } from "./components/PrivateRoute";
 import React from "react";
+
+const NoMatch = () => <h1 style={{ margin: "100px auto" }}>404 Not found</h1>;
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Route exact path="/" component={Login} />
+        <Switch>
+          <Route exact path="/private" component={PrivateRoute} />
+          <Route exact path="/bubble" compoent={BubblePage} />
+          <Route exact path="/" component={Login} />
+          <Route path="*">
+            <NoMatch />
+          </Route>
+        </Switch>
       </div>
     </Router>
   );

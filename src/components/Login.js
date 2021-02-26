@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-const Login = () => {
+const Login = (props) => {
   const [token, setToken] = useLocalStorage("token", null);
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
@@ -50,12 +51,12 @@ const Login = () => {
         password: state.password,
       })
       .then((res) => {
-        console.log({ res });
         setState({
           ...state,
           isLoading: false,
         });
         setToken(res.data.payload);
+        props.history.push("/bubble");
       })
       .catch((err) =>
         setState({
