@@ -16,6 +16,12 @@ const Login = (props) => {
   };
   const [state, setState] = useState(initialState);
 
+  useEffect(() => {
+    // make a post request to retrieve a token from the api
+    // when you have handled the token, navigate to the BubblePage route
+  });
+
+  // IGNORE THE USEEFFECT BELOW!!!
   // useEffect(() => {
   //   axios
   //     .delete(`http://localhost:5000/api/colors/1`, {

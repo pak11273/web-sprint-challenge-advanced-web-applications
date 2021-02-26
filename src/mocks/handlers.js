@@ -87,10 +87,10 @@ let nextId = 12;
 
 function authenticator(req) {
   const { authorization } = req.headers.map;
-  return (authorization === token);
+  return authorization === token;
 }
 
-const urlBase = 'http://localhost:5000/api';
+const urlBase = "http://localhost:5000/api";
 
 export const handlers = [
   // Handles a POST /login request
@@ -98,29 +98,27 @@ export const handlers = [
     const { username, password } = req.body;
     if (username === "Lambda School" && password === "i<3Lambd4") {
       return res(
-          ctx.status(200),
-          ctx.json({
-              payload: token,
-          }))
+        ctx.status(200),
+        ctx.json({
+          payload: token,
+        })
+      );
     } else {
-        return res(
-            ctx.status(403),
-            ctx.json({ error: "Username or Password incorrect. Please see Readme" })
-        );
+      return res(
+        ctx.status(403),
+        ctx.json({ error: "Username or Password incorrect. Please see Readme" })
+      );
     }
   }),
   // Handles a GET /user request
   rest.get(`${urlBase}/colors`, (req, res, ctx) => {
     if (authenticator(req)) {
-      return res(
-        ctx.status(200),
-        ctx.json(colors)
-      );
+      return res(ctx.status(200), ctx.json(colors));
     } else {
       res(
         ctx.status(403),
         ctx.json({ error: "User must be logged in to do that." })
-      )
+      );
     }
   }),
 
@@ -132,21 +130,19 @@ export const handlers = [
         colors.push(newColor);
       }
       nextId = nextId + 1;
-      return res(
-        ctx.status(201), 
-        ctx.json(colors)
-      );
+      return res(ctx.status(201), ctx.json(colors));
     } else {
       return res(
         ctx.status(403),
         ctx.json({ error: "User must be logged in to do that." })
-      )
+      );
     }
   }),
 
   rest.put(`${urlBase}/colors/:id`, (req, res, ctx) => {
     if (authenticator(req)) {
       if (!req.params.id) {
+        console.log("1");
         return res(
           ctx.status(400),
           ctx.send("Your request is missing the color id")
@@ -154,6 +150,7 @@ export const handlers = [
       }
 
       if (req.body.id === undefined || !req.body.color || !req.body.code) {
+        console.log("2", req);
         return res(
           ctx.status(422),
           ctx.send("Make sure your request body has all the fields it needs")
@@ -161,14 +158,17 @@ export const handlers = [
       }
 
       colors = colors.map((color) => {
+        console.log("3");
         if (`${color.id}` === req.params.id) {
           return req.body;
         }
         return color;
       });
+      console.log("4");
 
       return res(ctx.status(200), ctx.json(req.body));
     } else {
+      console.log("5");
       return res(
         ctx.status(403),
         ctx.json({ error: "User must be logged in to do that." })
@@ -189,14 +189,11 @@ export const handlers = [
       return res(
         ctx.status(403),
         ctx.json({ error: "User must be logged in to do that." })
-      )
+      );
     }
   }),
 
   rest.get(urlBase, function (req, res, ctx) {
-    return res(
-      ctx.status(200),
-      ctx.json("The App is working!")
-    );
+    return res(ctx.status(200), ctx.json("The App is working!"));
   }),
 ];
