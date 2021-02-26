@@ -1,15 +1,19 @@
 import { Redirect, Route } from "react-router-dom";
 
 import React from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export const PrivateRoute = () => {
-  const [token] = useLocalStorage();
-
+export const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
-    <Route exact path="/private">
-      {token ? <Redirect to="/bubble" /> : <Redirect to="/" />}
-    </Route>
+    <Route
+      {...rest}
+      render={() => {
+        if (localStorage.getItem("token")) {
+          return <Component />;
+        } else {
+          return <Redirect to="/login" />;
+        }
+      }}
+    />
   );
 };
 

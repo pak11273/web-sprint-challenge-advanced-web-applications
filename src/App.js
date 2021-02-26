@@ -14,8 +14,7 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route exact path="/private" component={PrivateRoute} />
-          <Route exact path="/bubble" compoent={BubblePage} />
+          <PrivateRoute exact path="/bubble" component={BubblePage} />
           <Route exact path="/" component={Login} />
           <Route path="*">
             <NoMatch />
