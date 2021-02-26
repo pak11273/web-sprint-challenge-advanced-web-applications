@@ -3,7 +3,7 @@ import {
   cleanup,
   getByText,
   render,
-  screen,
+  waitFor,
 } from "@testing-library/react";
 
 import BubblePage from "./BubblePage";
@@ -46,8 +46,8 @@ test("Renders BubblePage without errors", () => {
 
 test("Fetches data and renders the bubbles on mounting", async () => {
   await act(async () => {
-    // const { getByText } = render(<GifGenerator />);
-    render(<BubblePage colorList={data} />);
-    // getByText("…Loading");
+    const { getByText } = render(<BubblePage colorList={data} />);
+    // await waitFor(() => getByText(data[0].color));
+    await waitFor(() => getByText(/bubble page/i));
   });
 });
