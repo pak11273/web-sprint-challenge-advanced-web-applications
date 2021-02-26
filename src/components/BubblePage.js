@@ -7,14 +7,14 @@ import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     .get("/api/colors")
-  //     .then((res) => {
-  //       setColorList(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  useEffect(() => {
+    axiosWithAuth()
+      .get("/api/colors")
+      .then((res) => {
+        setColorList(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
