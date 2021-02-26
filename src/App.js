@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import "./styles.scss";
+
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 import Login from "./components/Login";
-import "./styles.scss";
+import React from "react";
 
 function App() {
   return (

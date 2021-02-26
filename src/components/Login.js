@@ -1,37 +1,97 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import axios from "axios";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const Login = () => {
+  const [token, setToken] = useLocalStorage("token", null);
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
+  const initialState = {
+    username: "",
+    password: "",
+    error: "",
+    isLoading: false,
+  };
+  const [state, setState] = useState(initialState);
 
-  useEffect(()=>{
+  // useEffect(() => {
+  //   axios
+  //     .delete(`http://localhost:5000/api/colors/1`, {
+  //       headers: {
+  //         authorization:
+  //           "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       axios
+  //         .get(`http://localhost:5000/api/colors`, {
+  //           headers: {
+  //             authorization: "",
+  //           },
+  //         })
+  //         .then((res) => {
+  //           console.log(res);
+  //         });
+  //       console.log(res);
+  //     });
+  // });
+
+  const onSubmit = (e) => {
+    //   username: 'Lambda School', password: 'i<3Lambd4'
+    e.preventDefault();
+    setState({
+      ...state,
+      isLoading: true,
+    });
     axios
-      .delete(`http://localhost:5000/api/colors/1`, {
-        headers:{
-          'authorization': "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98"
-        }
+      .post("http://localhost:5000/api/login", {
+        username: state.username,
+        password: state.password,
       })
-      .then(res=>{
-        axios.get(`http://localhost:5000/api/colors`, {
-          headers:{
-            'authorization': ""
-          }
-        })
-        .then(res=> {
-          console.log(res);
+      .then((res) => {
+        console.log({ res });
+        setState({
+          ...state,
+          isLoading: false,
         });
-        console.log(res);
+        setToken(res.data.payload);
       })
-  });
+      .catch((err) =>
+        setState({
+          ...state,
+          error: err.response.data.error,
+          isLoading: false,
+        })
+      );
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
 
   return (
-    <>
-      <h1>
-        Welcome to the Bubble App!
-        <p>Build a login page here</p>
-      </h1>
-    </>
+    <div style={{ display: "flex", flexFlow: "column wrap", margin: "0 auto" }}>
+      <form onSubmit={onSubmit}>
+        <h1>Welcome to the Bubble App!</h1>
+        <label>
+          username
+          <input type="text" name="username" onChange={handleChange} />
+        </label>
+        <label>
+          password
+          <input type="text" name="password" onChange={handleChange} />
+        </label>
+        <div style={{ color: "red" }}>{state.error}</div>
+        <button style={{ maxWidth: "100px", margin: "20px auto" }}>
+          {state.isLoading ? "loading..." : "login"}
+        </button>
+      </form>
+    </div>
   );
 };
 
